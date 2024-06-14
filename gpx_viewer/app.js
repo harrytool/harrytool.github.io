@@ -12,7 +12,7 @@ var gpxFile = params.get('file');
 
 // 檢查是否有提供 GPX 文件的參數
 if (gpxFile) {
-    var gpxUrl = gpxFile;  // 使用網址參數中的 GPX 檔案的 URL
+    var gpxUrl = 'gpx/' + gpxFile;  // 使用網址參數中的 GPX 檔案的 URL
 
     fetch(gpxUrl)
         .then(response => response.text())
