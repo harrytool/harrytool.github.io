@@ -1,70 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GPX File Viewer</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <style>
-    #map {
-      height: 400px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPX 軌跡繪製</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 500px;
+        }
+    </style>
 </head>
 <body>
-  <div id="map"></div>
-  <input type="file" id="fileInput" accept=".gpx">
-  <button onclick="handleFile()">Load GPX File</button>
-
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet-gpx/dist/leaflet-gpx.min.js"></script>
-  <script>
-    var map = L.map('map').setView([0, 0], 2);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-    }).addTo(map);
-
-    var gpxLayer = null;
-
-    function handleFile() {
-      var file = document.getElementById('fileInput').files[0];
-      var reader = new FileReader();
-
-      reader.onload = function(e) {
-        var gpxData = e.target.result;
-
-        if (gpxLayer) {
-          map.removeLayer(gpxLayer);
-        }
-
-        gpxLayer = new L.GPX(gpxData, {
-          async: true,
-          marker_options: {
-            startIconUrl: null,
-            endIconUrl: null,
-            shadowUrl: null,
-          },
-          polyline_options: {
-            color: 'blue',
-            opacity: 0.75,
-            weight: 3,
-            lineCap: 'round'
-          }
-        });
-
-        gpxLayer.addTo(map);
-
-        // Example: Accessing distance and elevation data
-        var distanceData = gpxLayer.get_distance();
-        var elevationData = gpxLayer.get_elevation_gain();
-
-        console.log("Distance: " + distanceData + " km");
-        console.log("Elevation Gain: " + elevationData + " m");
-      };
-
-      reader.readAsText(file);
-    }
-  </script>
+    <input type="file" id="gpxFile" accept=".gpx" />
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/togeojson/0.16.0/togeojson.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
